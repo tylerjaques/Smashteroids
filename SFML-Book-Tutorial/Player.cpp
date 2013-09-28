@@ -4,12 +4,29 @@
 Player::Player()
 {
 	mHealth = 100;
+	Speed = 0.0f;
+	mAcceleration = 20.0f;
+	FlyingAngle = 270;
 	setPosition(200.f, 200.f);
 	CreatePlayerShape();
 }
 
 void Player::Shoot() {
 	mGunSound.play();
+}
+
+void Player::Accelerate()
+{
+	Speed += mAcceleration;
+}
+
+void Player::ApplyResistance(float resistance)
+{
+	Speed -= resistance;
+	if(Speed <= 0.0f)
+	{
+		Speed = 0.0f;
+	}
 }
 
 

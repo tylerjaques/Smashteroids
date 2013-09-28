@@ -8,6 +8,7 @@ class Player : public sf::ConvexShape
 {
 private:
 	int mHealth;
+	float mAcceleration;
 	float mMaxSpeed;
 	void CreatePlayerShape();
 
@@ -16,10 +17,14 @@ public:
 
 	Player();
 	void Shoot();
+	void Accelerate();
+	void ApplyResistance(float resistance);
 	~Player();
 
-	float mSpeed;
-	sf::Transform trans;
+	float Speed;
+	float FlyingAngle;
+	sf::Transform Tran;
+
 
 };
 

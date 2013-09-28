@@ -106,7 +106,9 @@ void Game::UpdateStatistics(sf::Time elapsedTime) {
 		mStatisticsText.setString(
 			"Frames / Second = " + toString(mStatisticsNumFrames) + "\n" +
 			"Time / Update = " + toString(mStatisticsUpdateTime.asMicroseconds() / mStatisticsNumFrames) + "us" + "\n" +
-			"Ship Angle = " + toString(mPlayer.getRotation()));
+			"Ship Angle = " + toString(mPlayer.getRotation()) + "\n" +
+			"Ship Flying Angle = " + toString(mPlayer.FlyingAngle) + "\n" +
+			"Ship Speed = " + toString(mPlayer.Speed));
 
 		mStatisticsUpdateTime -= sf::seconds(1.0f);
 		mStatisticsNumFrames = 0;
@@ -160,21 +162,25 @@ void Game::HandlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
 
 void Game::Update(sf::Time deltaTime) {
 
-	float speed = PlayerSpeed * deltaTime.asSeconds();
+	float speed = mPlayer.Speed * deltaTime.asSeconds();
+
 	float rotation = 0;
 	
 	if (mIsMovingUp) {
-		float angle = mPlayer.getRotation() * (PI/180.0f);
-		mPlayer.trans.translate(std::cos(angle)*(speed),std::sin(angle)*(speed));
-		
+		mPlayer.Accelerate();		
+		mPlayer.FlyingAngle = mPlayer.getRotation();
 	}
 
 	if (mIsRotatingLeft)
-		rotation -= speed;
+		rotation -= PlayerSpeed * deltaTime.asSeconds();
 
 	if (mIsRotatingRight)
-		rotation += speed;
+		rotation += PlayerSpeed * deltaTime.asSeconds();
 	
+	float angle = mPlayer.FlyingAngle * (PI/180.0f);
+		mPlayer.Tran.translate(std::cos(angle)*(speed),std::sin(angle)*(speed));		
+
+	mPlayer.ApplyResistance(10.0f);
 	mPlayer.rotate(rotation);
 	
 }
@@ -183,7 +189,7 @@ void Game::Render() {
 
 	mWindow.clear();
 
-	mWindow.draw(mPlayer, mPlayer.trans);
+	mWindow.draw(mPlayer, mPlayer.Tran);
 
 	mWindow.draw(mStatisticsText);
 
