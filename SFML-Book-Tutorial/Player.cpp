@@ -11,17 +11,17 @@ Player::Player()
 	CreatePlayerShape();
 }
 
+Player::~Player(void) { }
+
 void Player::Shoot() {
-	mGunSound.play();
+	GunSound.play();
 }
 
-void Player::Accelerate()
-{
+void Player::Accelerate() {
 	Speed += mAcceleration;
 }
 
-void Player::ApplyResistance(float resistance)
-{
+void Player::ApplyResistance(float resistance) {
 	Speed -= resistance;
 	if(Speed <= 0.0f)
 	{
@@ -29,13 +29,15 @@ void Player::ApplyResistance(float resistance)
 	}
 }
 
+void Player::Create(sf::SoundBuffer& moveBuff, sf::SoundBuffer& gunBuff) {
 
-Player::~Player(void)
-{
+	MoveSound.setBuffer(moveBuff);
+	MoveSound.setLoop(true);
+
+	GunSound.setBuffer(gunBuff);
 }
 
-void Player::CreatePlayerShape()
-{
+void Player::CreatePlayerShape() {
 	setPointCount(4);
 
 	setOrigin(30.0f,30.0f);

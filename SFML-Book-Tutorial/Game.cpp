@@ -60,8 +60,7 @@ void Game::Load() {
 	mSoundManager.LoadFromFile("./Resources/Configs/SoundMap.config");
 
 	//give player default weapon
-	
-	mPlayer.mGunSound.setBuffer(mSoundManager["lazer"]);
+	mPlayer.Create(mSoundManager["drill"], mSoundManager["lazer"]);
 }
 
 void Game::Run() {
@@ -156,8 +155,15 @@ void Game::HandlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
 		mIsRotatingLeft = isPressed;
 	else if(key == sf::Keyboard::Right)
 		mIsRotatingRight = isPressed;
-		
-	
+
+	if(mIsMovingUp) {
+		if(mPlayer.MoveSound.getStatus() != sf::Sound::Playing) {
+			mPlayer.MoveSound.play();
+		}
+	}
+	else {
+		mPlayer.MoveSound.stop();
+	}
 }
 
 void Game::Update(sf::Time deltaTime) {
@@ -169,6 +175,8 @@ void Game::Update(sf::Time deltaTime) {
 	if (mIsMovingUp) {
 		mPlayer.Accelerate();		
 		mPlayer.FlyingAngle = mPlayer.getRotation();
+		float angle = mPlayer.getRotation() * (PI/180.0f);
+		mPlayer.trans.translate(std::cos(angle)*(speed),std::sin(angle)*(speed));
 	}
 
 	if (mIsRotatingLeft)
@@ -182,7 +190,6 @@ void Game::Update(sf::Time deltaTime) {
 
 	mPlayer.ApplyResistance(10.0f);
 	mPlayer.rotate(rotation);
-	
 }
 
 void Game::Render() {

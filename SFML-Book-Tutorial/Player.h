@@ -13,19 +13,22 @@ private:
 	void CreatePlayerShape();
 
 public:
-	sf::Sound mGunSound;
-
-	Player();
-	void Shoot();
-	void Accelerate();
-	void ApplyResistance(float resistance);
-	~Player();
-
+	sf::Sound GunSound;
+	sf::Sound MoveSound;
 	float Speed;
 	float FlyingAngle;
 	sf::Transform Tran;
+	float mSpeed;
+	sf::Transform trans;
+	
+	Player();
+	~Player();
 
+	void Accelerate();
+	void ApplyResistance(float resistance);
 
+	void Shoot();
+	void Create(sf::SoundBuffer& moveBuff, sf::SoundBuffer& gunBuff);
 };
 
 #endif
