@@ -230,12 +230,6 @@ void Game::Update(sf::Time deltaTime) {
 			mItemsToDeleteIndexes.push_back(i);
 	}
 
-	if(mItemsToDeleteIndexes.size() > 0) {
-		//delete items
-		for(unsigned i = 0; i < mItemsToDeleteIndexes.size(); ++i)
-			mEntities.erase(mEntities.begin() + mItemsToDeleteIndexes[i]);
-	}
-
 	HandleOffScreenObjects();
 	HandleCollision();
 
@@ -245,13 +239,12 @@ void Game::Render() {
 
 	mWindow.clear();
 
-	if(!mPlayer.RemoveFromWorld)
-		mWindow.draw(mPlayer);
+	
+	mWindow.draw(mPlayer);
 
 	mWindow.draw(mStatisticsText);
 
 	for(EntityIterator it = mEntities.begin(); it != mEntities.end(); ++it) {
-		if(!(*it)->RemoveFromWorld)
 			(*it)->draw(mWindow, sf::RenderStates::Default);
 	}
 

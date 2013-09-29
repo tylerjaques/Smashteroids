@@ -79,7 +79,3 @@ std::unique_ptr<Entity> Asteroid::Create(std::default_random_engine& randEngine)
 	return std::unique_ptr<Entity>(new Asteroid(randEngine));
 }
 
-bool Asteroid::CheckCollision(sf::Vector2f point) {
-	
-}
-

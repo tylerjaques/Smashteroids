@@ -57,14 +57,12 @@ void Bullet::update(sf::Time deltaTime) {
 }
 
 sf::FloatRect Bullet::GetBoundingBox() {
-	throw std::exception("Not Implemented!");
-	return sf::FloatRect(0, 0, 0, 0);
+	return mShape.getGlobalBounds();
 }
 
 Bullet::~Bullet() {
 	std::cout << __FUNCTION__ << std::endl;
 	Entity::~Entity();
 	
-	return mShape.getGlobalBounds();
 
 }
