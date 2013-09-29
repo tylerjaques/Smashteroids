@@ -25,6 +25,10 @@ void SoundManager::LoadFromFile(std::string filepath) {
 	}
 }
 
-sf::SoundBuffer& SoundManager::operator[](std::string name) {
+sf::SoundBuffer& SoundManager::get(std::string name) {
 	return mSoundBuffMap[name];
+}
+
+const sf::SoundBuffer& SoundManager::get(std::string name) const {
+	return mSoundBuffMap.at(name);
 }

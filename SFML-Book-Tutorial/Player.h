@@ -3,9 +3,10 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "ConfigMap.h"
+#include "SoundManager.h"
+#include "Bullet.h"
 
-class Player : public sf::ConvexShape
-{
+class Player : public sf::ConvexShape {
 private:
 	int mHealth;
 	float mAcceleration;
@@ -27,8 +28,8 @@ public:
 	void Accelerate();
 	void ApplyResistance(float resistance);
 
-	void Shoot();
-	void Create(sf::SoundBuffer& moveBuff, sf::SoundBuffer& gunBuff);
+	Bullet Shoot();
+	void Create(const SoundManager* soundMngr);
 };
 
 #endif

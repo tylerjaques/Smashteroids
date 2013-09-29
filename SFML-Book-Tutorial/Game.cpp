@@ -2,7 +2,6 @@
 #include <string>
 #include <sstream>
 #include <iostream>
-#define _USE_MATH_DEFINES // for C++
 #include <cmath>
 
 //const initializers
@@ -60,7 +59,7 @@ void Game::Load() {
 	mSoundManager.LoadFromFile("./Resources/Configs/SoundMap.config");
 
 	//give player default weapon
-	mPlayer.Create(mSoundManager["drill"], mSoundManager["lazer"]);
+	mPlayer.Create(&mSoundManager);
 }
 
 void Game::Run() {

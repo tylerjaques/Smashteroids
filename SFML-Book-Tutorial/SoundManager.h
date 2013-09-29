@@ -20,6 +20,8 @@ public:
 
 	void Play(std::string name);
 
-	sf::SoundBuffer& operator[](std::string name);
+	sf::SoundBuffer& get(std::string name);
+
+	const sf::SoundBuffer& get(std::string name) const;
 };
 #endif

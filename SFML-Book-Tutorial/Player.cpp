@@ -13,8 +13,13 @@ Player::Player()
 
 Player::~Player(void) { }
 
-void Player::Shoot() {
+Bullet Player::Shoot() {
 	GunSound.play();
+
+	sf::Vector2f pos = getPosition();
+	float translationAngle = FlyingAngle;
+	
+	return Bullet(pos.x, pos.y, translationAngle, 50);
 }
 
 void Player::Accelerate() {
@@ -29,12 +34,11 @@ void Player::ApplyResistance(float resistance) {
 	}
 }
 
-void Player::Create(sf::SoundBuffer& moveBuff, sf::SoundBuffer& gunBuff) {
+void Player::Create(const SoundManager* soundMngr) {
 
-	MoveSound.setBuffer(moveBuff);
+	MoveSound.setBuffer(soundMngr->get("drill"));
 	MoveSound.setLoop(true);
-
-	GunSound.setBuffer(gunBuff);
+	GunSound.setBuffer(soundMngr->get("lazer"));
 }
 
 void Player::CreatePlayerShape() {

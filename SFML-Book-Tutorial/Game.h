@@ -4,6 +4,7 @@
 #include "ConfigMap.h"
 #include "Player.h"
 #include "SoundManager.h"
+#include <vector>
 
 class Game : sf::NonCopyable {
 	
@@ -14,6 +15,7 @@ private:
 	sf::CircleShape mPolygon;
 	SoundManager mSoundManager;
 	sf::Sound mSound;
+	std::vector<sf::Drawable> mDrawables;
 
 
 	static const float		PlayerSpeed;
@@ -40,6 +42,5 @@ private:
 	void UpdateStatistics(sf::Time deltaTime);
 	void Render();
 	void HandlePlayerInput(sf::Keyboard::Key key, bool isPressed);
-
 };
 #endif
