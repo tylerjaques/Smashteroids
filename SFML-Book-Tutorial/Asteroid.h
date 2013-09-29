@@ -2,6 +2,7 @@
 #define __ASTEROID_H__
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <random>
 #include "ConfigMap.h"
 #include "Entity.h"
 
@@ -9,15 +10,13 @@ class Asteroid : public Entity {
 
 private:
 	sf::CircleShape mShape;
-	int mSpeed;
-	int mMovingAngle;
 	int mRotationSpeed;
 	int mRotationDirection;
 	
 	static const float PlayerSpeed;
 
 public:
-	Asteroid(void);
+	Asteroid(std::default_random_engine& randEngine);
 	~Asteroid(void);
 
 	//inherits from Entity

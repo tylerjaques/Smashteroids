@@ -15,8 +15,6 @@ private:
 	sf::RenderWindow mWindow;
 	sf::Texture mTexture;
 	Player mPlayer;
-	Asteroid mAsteroid;
-	sf::CircleShape mPolygon;
 	SoundManager mSoundManager;
 	sf::Sound mSound;
 	std::vector<std::unique_ptr<Entity> > mEntities;
