@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "ConfigMap.h"
 #include "Player.h"
+#include "Asteroid.h"
 #include "SoundManager.h"
 #include <vector>
 
@@ -14,6 +15,7 @@ private:
 	sf::RenderWindow mWindow;
 	sf::Texture mTexture;
 	Player mPlayer;
+	Asteroid mAsteroid;
 	sf::CircleShape mPolygon;
 	SoundManager mSoundManager;
 	sf::Sound mSound;

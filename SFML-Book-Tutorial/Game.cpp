@@ -57,6 +57,9 @@ void Game::Load() {
 
 	//give player default weapon
 	mPlayer.Create(&mSoundManager);
+
+	mAsteroid = Asteroid();
+
 }
 
 void Game::Run() {
@@ -169,12 +172,25 @@ void Game::HandleOffScreenObjects() {
 		mPlayer.SetPosition(x, maxY);
 	else if (y > maxX)
 		mPlayer.SetPosition(x,0);
+
+	x = mAsteroid.GetPosition().x;
+	y = mAsteroid.GetPosition().y;
+
+	if (x < 0)
+		mAsteroid.SetPosition(maxX, y);
+	else if (x > maxX)
+		mAsteroid.SetPosition(0,y);
+	if (y < 0)
+		mAsteroid.SetPosition(x, maxY);
+	else if (y > maxX)
+		mAsteroid.SetPosition(x,0);
 }
 
 
 void Game::Update(sf::Time deltaTime) {
 
 	mPlayer.update(deltaTime);
+	mAsteroid.update(deltaTime);
 
 	for(EntityIterator it = mEntities.begin(); it != mEntities.end(); ++it) {
 			(*it)->update(deltaTime);
@@ -189,6 +205,7 @@ void Game::Render() {
 	mWindow.clear();
 
 	mWindow.draw(mPlayer);
+	mWindow.draw(mAsteroid);
 
 	for(EntityIterator it = mEntities.begin(); it != mEntities.end(); ++it) {
 		(*it)->draw(mWindow, sf::RenderStates::Default);
