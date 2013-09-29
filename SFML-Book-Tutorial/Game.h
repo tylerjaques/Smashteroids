@@ -6,6 +6,8 @@
 #include "SoundManager.h"
 #include <vector>
 
+typedef std::vector<std::unique_ptr<Entity> >::iterator EntityIterator;
+
 class Game : sf::NonCopyable {
 	
 private:
@@ -15,7 +17,7 @@ private:
 	sf::CircleShape mPolygon;
 	SoundManager mSoundManager;
 	sf::Sound mSound;
-	std::vector<sf::Drawable> mDrawables;
+	std::vector<std::unique_ptr<Entity> > mEntities;
 
 	static const sf::Time	TimePerFrame;
 
@@ -23,8 +25,6 @@ private:
 	sf::Text mStatisticsText;
 	sf::Time mStatisticsUpdateTime;
 	std::size_t mStatisticsNumFrames;
-
-	bool mIsMovingUp, mIsMovingDown, mIsMovingLeft, mIsMovingRight, mIsRotatingLeft, mIsRotatingRight;
 
 	Config::ConfigMap Settings;
 

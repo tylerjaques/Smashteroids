@@ -3,8 +3,8 @@
 const float Player::PlayerSpeed = 250.f;
 const float PI = std::atan(1.0f) * 4.0f;
 
-Player::Player() : mMaxSpeed(1000.0f), mHealth(100.0f), Speed(0.0f), mAcceleration(20.0f),
-	FlyingAngle(270), mIsMovingUp(false), mIsRotatingLeft(false), mIsRotatingRight(false), mIsMovingDown(false) {
+Player::Player() : mMaxSpeed(1000.0f), mHealth(100.0f), mAcceleration(20.0f),
+	FlyingAngle(270), IsMovingUp(false), IsRotatingLeft(false), IsRotatingRight(false) {
 
 		mConvex.setPosition(200.f, 200.f);
 	
@@ -13,13 +13,13 @@ Player::Player() : mMaxSpeed(1000.0f), mHealth(100.0f), Speed(0.0f), mAccelerati
 
 Player::~Player(void) { }
 
-Bullet Player::Shoot() {
+std::unique_ptr<Entity> Player::Shoot() {
 	GunSound.play();
 
 	sf::Vector2f pos = GetPosition();
 	float translationAngle = FlyingAngle;
 	
-	return Bullet(pos.x, pos.y, translationAngle, 50);
+	return std::unique_ptr<Entity>(new Bullet(pos.x, pos.y, translationAngle, 50));
 }
 
 void Player::Accelerate() {
@@ -68,15 +68,15 @@ void Player::update(sf::Time deltaTime) {
 
 	float rotation = 0;
 	
-	if (mIsMovingUp) {
+	if (IsMovingUp) {
 		Accelerate();		
 		FlyingAngle = mConvex.getRotation();
 	}
 
-	if (mIsRotatingLeft)
+	if (IsRotatingLeft)
 		rotation -= PlayerSpeed * deltaTime.asSeconds();
 
-	if (mIsRotatingRight)
+	if (IsRotatingRight)
 		rotation += PlayerSpeed * deltaTime.asSeconds();
 	
 	float angle = FlyingAngle * (PI/180.0f);
@@ -85,6 +85,16 @@ void Player::update(sf::Time deltaTime) {
 
 	ApplyResistance(10.0f);
 	mConvex.rotate(rotation);
+
+	//sounds
+	if(IsMovingUp) {
+		if(MoveSound.getStatus() != sf::Sound::Playing) {
+			MoveSound.play();
+		}
+	}
+	else {
+		MoveSound.stop();
+	}
 }
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const {
@@ -94,30 +104,11 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 sf::Vector2f Player::GetPosition() {
 	return mConvex.getPosition();
 }
+
 void Player::SetPosition(float x, float y) {
 	mConvex.setPosition(x, y);
 }
 
 float Player::GetRotation() {
 	return mConvex.getRotation();
-}
-
-void Player::HandlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
-
-	mIsMovingUp = sf::Keyboard::isKeyPressed(sf::Keyboard::Up);
-	
-	mIsMovingDown = sf::Keyboard::isKeyPressed(sf::Keyboard::Down);
-
-	mIsRotatingLeft = sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
-
-	mIsRotatingRight = sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
-
-	if(mIsMovingUp) {
-		if(MoveSound.getStatus() != sf::Sound::Playing) {
-			MoveSound.play();
-		}
-	}
-	else {
-		MoveSound.stop();
-	}
 }

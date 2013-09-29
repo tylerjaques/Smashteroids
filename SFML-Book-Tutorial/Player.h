@@ -6,6 +6,7 @@
 #include "SoundManager.h"
 #include "Bullet.h"
 #include "Entity.h"
+#include <memory>
 
 class Player : public Entity {
 private:
@@ -13,19 +14,16 @@ private:
 	float mAcceleration;
 	float mMaxSpeed;
 	void CreatePlayerShape();
-	sf::ConvexShape mConvex;
-
-	bool mIsMovingUp;
-	bool mIsRotatingLeft;
-	bool mIsRotatingRight;
-	bool mIsMovingDown;
-	
+	sf::ConvexShape mConvex;	
 	static const float PlayerSpeed;
 
 public:
+	bool IsMovingUp;
+	bool IsRotatingLeft;
+	bool IsRotatingRight;
+
 	sf::Sound GunSound;
 	sf::Sound MoveSound;
-	float Speed;
 	float FlyingAngle;
 	sf::Transform Tran;
 	float mSpeed;
@@ -37,9 +35,8 @@ public:
 	void Accelerate();
 	void ApplyResistance(float resistance);
 
-	Bullet Shoot();
+	std::unique_ptr<Entity> Shoot();
 	void Create(const SoundManager* soundMngr);
-	void HandlePlayerInput(sf::Keyboard::Key key, bool isPressed);
 
 	//inherits from Entity
 	void update(sf::Time deltaTime);

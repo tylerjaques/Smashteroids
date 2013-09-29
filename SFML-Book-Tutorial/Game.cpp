@@ -8,8 +8,7 @@
 const sf::Time Game::TimePerFrame = sf::seconds(1.f/60.f);
 
 //book initializes mPlayer() after mWindow, but it isn't necessary
-Game::Game() : mIsMovingDown(false), 
-	mIsMovingUp(false), mIsRotatingLeft(false), mIsRotatingRight(false), mStatisticsNumFrames(0), mStatisticsUpdateTime(sf::Time::Zero) {
+Game::Game() : mStatisticsNumFrames(0), mStatisticsUpdateTime(sf::Time::Zero) {
 
 	try {
 
@@ -125,9 +124,6 @@ void Game::ProcessEvents() {
 		case sf::Event::KeyPressed:
 			if(event.key.code == sf::Keyboard::Escape)
 				mWindow.close();
-			else if(event.key.code == sf::Keyboard::Space) {
-				mPlayer.Shoot();
-			}
 			else
 				HandlePlayerInput(event.key.code, true);
 			break;
@@ -146,27 +142,16 @@ void Game::ProcessEvents() {
 
 void Game::HandlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
 
-	mPlayer.HandlePlayerInput(key, isPressed);
-/*
 	if(key == sf::Keyboard::Up)
-		mIsMovingUp = isPressed;
-	else if(key == sf::Keyboard::Down)
-		mIsMovingDown = isPressed;
+		mPlayer.IsMovingUp = isPressed;
 	else if(key == sf::Keyboard::Left)
-		mIsRotatingLeft = isPressed;
+		mPlayer.IsRotatingLeft = isPressed;
 	else if(key == sf::Keyboard::Right)
-		mIsRotatingRight = isPressed;
-*/
-
-
-	/*if(mIsMovingUp) {
-		if(mPlayer.MoveSound.getStatus() != sf::Sound::Playing) {
-			mPlayer.MoveSound.play();
-		}
+		mPlayer.IsRotatingRight = isPressed;
+	else if(key == sf::Keyboard::Space) {
+		
+		mEntities.push_back(mPlayer.Shoot());
 	}
-	else {
-		mPlayer.MoveSound.stop();
-	}*/
 }
 
 void Game::HandleOffScreenObjects() {
@@ -191,6 +176,10 @@ void Game::Update(sf::Time deltaTime) {
 
 	mPlayer.update(deltaTime);
 
+	for(EntityIterator it = mEntities.begin(); it != mEntities.end(); ++it) {
+			(*it)->update(deltaTime);
+	}
+
 	HandleOffScreenObjects();
 
 }
@@ -201,7 +190,9 @@ void Game::Render() {
 
 	mWindow.draw(mPlayer);
 
-	mWindow.draw(mStatisticsText);
+	for(EntityIterator it = mEntities.begin(); it != mEntities.end(); ++it) {
+		(*it)->draw(mWindow, sf::RenderStates::Default);
+	}
 
 	mWindow.display();
 
