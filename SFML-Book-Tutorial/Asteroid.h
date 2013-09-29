@@ -12,10 +12,9 @@ private:
 	sf::CircleShape mShape;
 	int mRotationSpeed;
 	int mRotationDirection;
-	
-	static const float PlayerSpeed;
 
 public:
+
 	Asteroid(std::default_random_engine& randEngine);
 	~Asteroid(void);
 

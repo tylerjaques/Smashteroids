@@ -213,6 +213,8 @@ void Game::Render() {
 
 	mWindow.draw(mPlayer);
 
+	mWindow.draw(mStatisticsText);
+
 	for(EntityIterator it = mEntities.begin(); it != mEntities.end(); ++it) {
 		(*it)->draw(mWindow, sf::RenderStates::Default);
 	}

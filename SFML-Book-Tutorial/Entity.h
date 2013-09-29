@@ -2,9 +2,12 @@
 #define __ENTITY_H__
 #include <SFML/Graphics.hpp>
 
-//enum class EntityType { Player, Bullet, Asteroid };
+enum class EntityType { Player, Bullet, Asteroid };
 
 class Entity : public sf::Drawable {
+private:
+	EntityType mType;
+
 public:
 	float Speed;
 	float MovementAngle;
@@ -16,5 +19,9 @@ public:
 	virtual void SetPosition(float x, float y) = 0;
 	virtual float GetRotation() = 0;
 	virtual sf::FloatRect GetBoundingBox() = 0;
+
+	//implemented methods
+	Entity(float velocity, float angle, EntityType t);
+	EntityType GetType();
 };
 #endif

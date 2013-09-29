@@ -4,12 +4,9 @@
 const float Bullet::Distance = 250.0f;
 
 //constructor is private
-Bullet::Bullet(float x, float y, float angle) {
+Bullet::Bullet(float x, float y, float angle) : Entity(2500.0f, angle, EntityType::Bullet) {
 
 	mDistanceTraveled = 0;
-
-	Speed = 50.0f;
-	MovementAngle = angle;
 
 	mShape.setPosition(x, y);
 	mShape.setRotation(MovementAngle);

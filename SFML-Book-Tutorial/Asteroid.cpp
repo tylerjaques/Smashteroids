@@ -2,7 +2,7 @@
 
 const float PI = std::atan(1.0f) * 4.0f;
 
-Asteroid::Asteroid(std::default_random_engine& randEngine) {
+Asteroid::Asteroid(std::default_random_engine& randEngine) : Entity(0, 0, EntityType::Asteroid) {
 	
 	int randomSize = randEngine() % 120 + 50;
 

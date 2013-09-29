@@ -4,7 +4,7 @@
 const float Player::PlayerSpeed = 250.f;
 
 Player::Player() : mMaxSpeed(1000.0f), mHealth(100.0f), mAcceleration(20.0f),
-	FlyingAngle(270), IsMovingUp(false), IsRotatingLeft(false), IsRotatingRight(false) {
+	FlyingAngle(270), IsMovingUp(false), IsRotatingLeft(false), IsRotatingRight(false), Entity(0, 0, EntityType::Player) {
 
 		mConvex.setPosition(200.f, 200.f);
 	
