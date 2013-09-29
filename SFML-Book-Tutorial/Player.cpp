@@ -3,7 +3,8 @@
 
 Player::Player()
 {
-	mHealth = 100;
+	mMaxSpeed = 1000.0f;
+	mHealth = 100.0f;
 	Speed = 0.0f;
 	mAcceleration = 20.0f;
 	FlyingAngle = 270;
@@ -18,6 +19,8 @@ void Player::Shoot() {
 void Player::Accelerate()
 {
 	Speed += mAcceleration;
+	if(Speed > mMaxSpeed)
+		Speed = mMaxSpeed;
 }
 
 void Player::ApplyResistance(float resistance)

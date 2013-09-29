@@ -33,6 +33,7 @@ public:
 	Game();
 	void Run();
 
+
 private:
 	void Load();
 	void ProcessEvents();
@@ -40,6 +41,7 @@ private:
 	void UpdateStatistics(sf::Time deltaTime);
 	void Render();
 	void HandlePlayerInput(sf::Keyboard::Key key, bool isPressed);
+	void HandleOffScreenObjects();
 
 };
 #endif

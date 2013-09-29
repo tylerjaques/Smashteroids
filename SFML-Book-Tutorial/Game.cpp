@@ -108,6 +108,7 @@ void Game::UpdateStatistics(sf::Time elapsedTime) {
 			"Time / Update = " + toString(mStatisticsUpdateTime.asMicroseconds() / mStatisticsNumFrames) + "us" + "\n" +
 			"Ship Angle = " + toString(mPlayer.getRotation()) + "\n" +
 			"Ship Flying Angle = " + toString(mPlayer.FlyingAngle) + "\n" +
+			"Ship Position = " + toString(mPlayer.getPosition().x) + "," + toString(mPlayer.getPosition().y) + "\n" +		
 			"Ship Speed = " + toString(mPlayer.Speed));
 
 		mStatisticsUpdateTime -= sf::seconds(1.0f);
@@ -126,8 +127,7 @@ void Game::ProcessEvents() {
 		case sf::Event::KeyPressed:
 			if(event.key.code == sf::Keyboard::Escape)
 				mWindow.close();
-			else if(event.key.code == sf::Keyboard::Space)
-			{
+			else if(event.key.code == sf::Keyboard::Space) {
 				mPlayer.Shoot();
 			}
 			else
@@ -160,6 +160,23 @@ void Game::HandlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
 	
 }
 
+void Game::HandleOffScreenObjects() {
+	float x = mPlayer.getPosition().x;
+	float y = mPlayer.getPosition().y;
+	float maxX = mWindow.getSize().x;
+	float maxY = mWindow.getSize().y;
+
+	if (x < 0)
+		mPlayer.setPosition(maxX, y);
+	else if (x > maxX)
+		mPlayer.setPosition(0,y);
+	if (y < 0)
+		mPlayer.setPosition(x, maxY);
+	else if (y > maxX)
+		mPlayer.setPosition(x,0);
+}
+
+
 void Game::Update(sf::Time deltaTime) {
 
 	float speed = mPlayer.Speed * deltaTime.asSeconds();
@@ -178,10 +195,11 @@ void Game::Update(sf::Time deltaTime) {
 		rotation += PlayerSpeed * deltaTime.asSeconds();
 	
 	float angle = mPlayer.FlyingAngle * (PI/180.0f);
-		mPlayer.Tran.translate(std::cos(angle)*(speed),std::sin(angle)*(speed));		
+		mPlayer.move(std::cos(angle)*(speed),std::sin(angle)*(speed));		
 
 	mPlayer.ApplyResistance(10.0f);
 	mPlayer.rotate(rotation);
+	HandleOffScreenObjects();
 	
 }
 
@@ -189,7 +207,7 @@ void Game::Render() {
 
 	mWindow.clear();
 
-	mWindow.draw(mPlayer, mPlayer.Tran);
+	mWindow.draw(mPlayer);
 
 	mWindow.draw(mStatisticsText);
 
