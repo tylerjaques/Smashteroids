@@ -12,11 +12,6 @@ Player::Player() : mMaxSpeed(1000.0f), mHealth(100.0f), mAcceleration(20.0f),
 		CreatePlayerShape();
 }
 
-Player::~Player(void) { 
-	std::cout << __FUNCTION__ << std::endl;
-	Entity::~Entity();
-}
-
 std::unique_ptr<Entity> Player::Shoot() {
 	GunSound.play();
 

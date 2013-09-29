@@ -60,8 +60,3 @@ sf::FloatRect Bullet::GetBoundingBox() {
 	throw std::exception("Not Implemented!");
 	return sf::FloatRect(0, 0, 0, 0);
 }
-
-Bullet::~Bullet() {
-	std::cout << __FUNCTION__ << std::endl;
-	Entity::~Entity();
-}

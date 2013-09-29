@@ -127,8 +127,10 @@ void Game::ProcessEvents() {
 		switch(event.type) {
 
 		case sf::Event::KeyPressed:
-			if(event.key.code == sf::Keyboard::Escape)
+			if(event.key.code == sf::Keyboard::Escape) {
+				mEntities.clear();
 				mWindow.close();
+			}
 			else
 				HandlePlayerInput(event.key.code, true);
 			break;
@@ -220,9 +222,10 @@ void Game::Update(sf::Time deltaTime) {
 	}
 
 	if(mItemsToDeleteIndexes.size() > 0) {
-		//delete items
 		for(unsigned i = 0; i < mItemsToDeleteIndexes.size(); ++i)
 			mEntities.erase(mEntities.begin() + mItemsToDeleteIndexes[i]);
+
+		mItemsToDeleteIndexes.clear();
 	}
 
 	HandleOffScreenObjects();

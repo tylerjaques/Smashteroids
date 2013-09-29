@@ -26,8 +26,6 @@ public:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	static std::unique_ptr<Entity> Create(float x, float y, float angle);
 	sf::FloatRect GetBoundingBox();
-
-	~Bullet();
 };
 
 #endif

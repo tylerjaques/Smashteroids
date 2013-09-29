@@ -30,7 +30,6 @@ public:
 	sf::Transform trans;
 	
 	Player();
-	~Player();
 
 	void Accelerate();
 	void ApplyResistance(float resistance);

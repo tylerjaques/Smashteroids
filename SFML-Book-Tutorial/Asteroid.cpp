@@ -32,13 +32,6 @@ Asteroid::Asteroid(std::default_random_engine& randEngine) : Entity(0, 0, Entity
 	int i = 0;
 }
 
-Asteroid::~Asteroid() {
-
-	std::cout << __FUNCTION__ << std::endl;
-
-	Entity::~Entity();
-}
-
 void Asteroid::update(sf::Time deltaTime){
 	float speed = Speed * deltaTime.asSeconds();
 	float angle = MovementAngle * (PI/180.0f);
