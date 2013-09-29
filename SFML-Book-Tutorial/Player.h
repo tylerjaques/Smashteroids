@@ -5,13 +5,22 @@
 #include "ConfigMap.h"
 #include "SoundManager.h"
 #include "Bullet.h"
+#include "Entity.h"
 
-class Player : public sf::ConvexShape {
+class Player : public Entity {
 private:
 	int mHealth;
 	float mAcceleration;
 	float mMaxSpeed;
 	void CreatePlayerShape();
+	sf::ConvexShape mConvex;
+
+	bool mIsMovingUp;
+	bool mIsRotatingLeft;
+	bool mIsRotatingRight;
+	bool mIsMovingDown;
+	
+	static const float PlayerSpeed;
 
 public:
 	sf::Sound GunSound;
@@ -30,6 +39,14 @@ public:
 
 	Bullet Shoot();
 	void Create(const SoundManager* soundMngr);
+	void HandlePlayerInput(sf::Keyboard::Key key, bool isPressed);
+
+	//inherits from Entity
+	void update(sf::Time deltaTime);
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+	sf::Vector2f GetPosition();
+	void SetPosition(float x, float y);
+	float GetRotation();
 };
 
 #endif

@@ -17,8 +17,6 @@ private:
 	sf::Sound mSound;
 	std::vector<sf::Drawable> mDrawables;
 
-
-	static const float		PlayerSpeed;
 	static const sf::Time	TimePerFrame;
 
 	sf::Font mFont;
