@@ -202,13 +202,22 @@ void Game::HandleCollision() {
 	
 }
 
-
 void Game::Update(sf::Time deltaTime) {
 
 	mPlayer.update(deltaTime);
 
-	for(EntityIterator it = mEntities.begin(); it != mEntities.end(); ++it) {
-			(*it)->update(deltaTime);
+	for(unsigned i = 0; i < mEntities.size(); ++i) {
+
+		mEntities[i]->update(deltaTime);
+
+		if(mEntities[i]->RemoveFromWorld)
+			mItemsToDeleteIndexes.push_back(i);
+	}
+
+	if(mItemsToDeleteIndexes.size() > 0) {
+		//delete items
+		for(unsigned i = 0; i < mItemsToDeleteIndexes.size(); ++i)
+			mEntities.erase(mEntities.begin() + mItemsToDeleteIndexes[i]);
 	}
 
 	HandleOffScreenObjects();
@@ -228,6 +237,5 @@ void Game::Render() {
 	}
 
 	mWindow.display();
-
 }
 

@@ -17,7 +17,7 @@ private:
 public:
 	Asteroid(std::default_random_engine& randEngine);
 	
-	~Asteroid(void);
+	~Asteroid();
 
 	//inherits from Entity
 	void update(sf::Time deltaTime);

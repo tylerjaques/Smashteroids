@@ -22,6 +22,7 @@ public:
 
 	//implemented methods
 	Entity(float velocity, float angle, EntityType t);
+	~Entity();
 	EntityType GetType();
 };
 #endif

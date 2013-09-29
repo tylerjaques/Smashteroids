@@ -1,10 +1,12 @@
 #include "Bullet.h"
 #include "PI.h"
+#include <iostream>
 
 const float Bullet::Distance = 250.0f;
+const float Bullet::mMaxDistance = 250.0f;
 
 //constructor is private
-Bullet::Bullet(float x, float y, float angle) : Entity(2500.0f, angle, EntityType::Bullet) {
+Bullet::Bullet(float x, float y, float angle) : Entity(250.0f, angle, EntityType::Bullet) {
 
 	mDistanceTraveled = 0;
 
@@ -39,17 +41,27 @@ void Bullet::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 }
 
 void Bullet::update(sf::Time deltaTime) {
+
+	if(mDistanceTraveled > mMaxDistance) {
+		RemoveFromWorld = true;
+		return;
+	}
 	
-	float speed = Speed * deltaTime.asSeconds();
+	float framespeed = Speed * deltaTime.asSeconds();
 	
 	float angle = MovementAngle * (PI/180.0f);
 
-	mDistanceTraveled += Speed;
+	mDistanceTraveled += framespeed;
 	
-	mShape.move(std::cos(angle)*(speed),std::sin(angle)*(speed));
+	mShape.move(std::cos(angle)*(framespeed),std::sin(angle)*(framespeed));
 }
 
 sf::FloatRect Bullet::GetBoundingBox() {
 	throw std::exception("Not Implemented!");
 	return sf::FloatRect(0, 0, 0, 0);
+}
+
+Bullet::~Bullet() {
+	std::cout << __FUNCTION__ << std::endl;
+	Entity::~Entity();
 }

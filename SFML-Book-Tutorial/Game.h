@@ -19,6 +19,7 @@ private:
 	SoundManager mSoundManager;
 	sf::Sound mSound;
 	std::vector<std::unique_ptr<Entity> > mEntities;
+	std::vector<int> mItemsToDeleteIndexes;
 
 	static const sf::Time	TimePerFrame;
 	std::default_random_engine randEngine;
