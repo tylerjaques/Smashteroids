@@ -4,9 +4,9 @@ const float PI = std::atan(1.0f) * 4.0f;
 
 Asteroid::Asteroid(std::default_random_engine& randEngine) : Entity(0, 0, EntityType::Asteroid) {
 	
-	int randomSize = randEngine() % 120 + 50;
+	int randomSize = randEngine() % 80 + 40;
 
-	int randomNumOfSides = randEngine() % 10 + 4;
+	int randomNumOfSides = randEngine() % 10 + 6;
 
 	//Create asteroid of random size and shape
 	mShape = sf::CircleShape(randomSize, randomNumOfSides);
@@ -21,7 +21,7 @@ Asteroid::Asteroid(std::default_random_engine& randEngine) : Entity(0, 0, Entity
 	MovementAngle = randEngine() % 360 + 0;
 	
 	//Move asteroid at random speed
-	Speed = randEngine() % 50 + 200;
+	Speed = randEngine() % 10 + 150;
 
 	//Rotate asteroid in random direction
 	mRotationDirection = randEngine() % 1 + 0;
@@ -67,7 +67,14 @@ float Asteroid::GetRotation() {
 	return MovementAngle;
 }
 
+
 sf::FloatRect Asteroid::GetBoundingBox() {
 	throw exception("Not Implemented!");
 	return sf::FloatRect(0, 0, 0, 0);
 }
+
+std::unique_ptr<Entity> Asteroid::Create(std::default_random_engine& randEngine) {
+	return std::unique_ptr<Entity>(new Asteroid(randEngine));
+}
+
+

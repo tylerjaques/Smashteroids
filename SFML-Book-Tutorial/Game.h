@@ -6,6 +6,7 @@
 #include "Asteroid.h"
 #include "SoundManager.h"
 #include <vector>
+#include <random>
 
 typedef std::vector<std::unique_ptr<Entity> >::iterator EntityIterator;
 
@@ -20,6 +21,7 @@ private:
 	std::vector<std::unique_ptr<Entity> > mEntities;
 
 	static const sf::Time	TimePerFrame;
+	std::default_random_engine randEngine;
 
 	sf::Font mFont;
 	sf::Text mStatisticsText;
@@ -42,5 +44,8 @@ private:
 	void Render();
 	void HandlePlayerInput(sf::Keyboard::Key key, bool isPressed);
 	void HandleOffScreenObjects();
+	void HandleCollision();
+	void SpawnAsteroids(int amount);
+
 };
 #endif
