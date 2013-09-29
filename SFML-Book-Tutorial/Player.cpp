@@ -19,7 +19,7 @@ std::unique_ptr<Entity> Player::Shoot() {
 	sf::Vector2f pos = GetPosition();
 	float translationAngle = FlyingAngle;
 	
-	return std::unique_ptr<Entity>(new Bullet(pos.x, pos.y, translationAngle, 50));
+	return std::unique_ptr<Entity>(Bullet::Create(pos.x, pos.y, translationAngle, 50));
 }
 
 void Player::Accelerate() {

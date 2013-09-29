@@ -2,6 +2,7 @@
 
 const float Bullet::Distance = 250.0f;
 
+//constructor is private
 Bullet::Bullet(float x, float y, float angle, float velocity) : mVelocity(velocity) {
 
 	Speed = 0;
@@ -11,7 +12,13 @@ Bullet::Bullet(float x, float y, float angle, float velocity) : mVelocity(veloci
 
 	mShape.setSize(sf::Vector2f(15, 15));
 
-	mShape.setFillColor(sf::Color::White);
+	mShape.setFillColor(sf::Color::Transparent);
+	mShape.setOutlineThickness(1);
+	mShape.setOutlineColor(sf::Color::White);
+}
+
+std::unique_ptr<Entity> Bullet::Create(float x, float y, float angle, float velocity) {
+	return std::unique_ptr<Entity>(new Bullet(x, y, angle, velocity));
 }
 
 sf::Vector2f Bullet::GetPosition() {
