@@ -10,10 +10,12 @@ Entity::Entity(float velocity, float angle, EntityType t) {
 	mType = t;
 
 	RemoveFromWorld = false;
+
 }
 
 Entity::~Entity() {
 	std::cout << __FUNCTION__ << std::endl;
+
 }
 
 EntityType Entity::GetType() {

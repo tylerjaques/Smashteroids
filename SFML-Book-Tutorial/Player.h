@@ -45,6 +45,8 @@ public:
 	void SetPosition(float x, float y);
 	float GetRotation();
 	sf::FloatRect GetBoundingBox();
+	float GetHealth();
+	void DamagePlayer(float damageAmount);
 };
 
 #endif

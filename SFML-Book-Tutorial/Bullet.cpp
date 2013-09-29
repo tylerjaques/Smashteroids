@@ -64,4 +64,7 @@ sf::FloatRect Bullet::GetBoundingBox() {
 Bullet::~Bullet() {
 	std::cout << __FUNCTION__ << std::endl;
 	Entity::~Entity();
+	
+	return mShape.getGlobalBounds();
+
 }

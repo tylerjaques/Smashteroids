@@ -72,12 +72,14 @@ float Asteroid::GetRotation() {
 
 
 sf::FloatRect Asteroid::GetBoundingBox() {
-	throw exception("Not Implemented!");
-	return sf::FloatRect(0, 0, 0, 0);
+	return mShape.getGlobalBounds();
 }
 
 std::unique_ptr<Entity> Asteroid::Create(std::default_random_engine& randEngine) {
 	return std::unique_ptr<Entity>(new Asteroid(randEngine));
 }
 
+bool Asteroid::CheckCollision(sf::Vector2f point) {
+	
+}
 
