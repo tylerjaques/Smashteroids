@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <random>
+#include <memory>
 #include "ConfigMap.h"
 #include "Entity.h"
 
@@ -15,8 +16,10 @@ private:
 	
 	static const float PlayerSpeed;
 
-public:
 	Asteroid(std::default_random_engine& randEngine);
+
+public:
+	
 	~Asteroid(void);
 
 	//inherits from Entity
@@ -26,6 +29,9 @@ public:
 	void SetPosition(float x, float y);
 	float GetRotation();
 	sf::FloatRect GetBoundingBox();
+	static std::unique_ptr<Entity> Create(std::default_random_engine& randEngine);
+
+
 
 	
 };

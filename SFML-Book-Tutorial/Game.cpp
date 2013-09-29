@@ -3,7 +3,7 @@
 #include <sstream>
 #include <iostream>
 #include <cmath>
-#include <random>
+
 
 //const initializer
 const sf::Time Game::TimePerFrame = sf::seconds(1.f/60.f);
@@ -12,7 +12,7 @@ const sf::Time Game::TimePerFrame = sf::seconds(1.f/60.f);
 Game::Game() : mStatisticsNumFrames(0), mStatisticsUpdateTime(sf::Time::Zero) {
 
 	try {
-
+		randEngine.seed(time(NULL));
 		//get window settings from the config file
 		Settings.LoadFromFile("./Resources/Configs/Settings.config");
 
@@ -58,13 +58,10 @@ void Game::Load() {
 
 	//give player default weapon
 	mPlayer.Create(&mSoundManager);
+	Game::SpawnAsteroids(5);
 
-	std::default_random_engine randEngine;
-	randEngine.seed(time(NULL));
-
-	for(unsigned i = 0; i < 10; ++i) {
-		mEntities.push_back(std::unique_ptr<Entity>(new Asteroid(randEngine)));
-	}
+	
+	
 }
 
 void Game::Run() {
@@ -162,6 +159,13 @@ void Game::HandlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
 	}
 }
 
+void Game::SpawnAsteroids(int amount){
+
+	for(unsigned i = 0; i < amount; ++i) {
+		mEntities.push_back(Asteroid::Create(randEngine));
+	}
+}
+
 void Game::HandleOffScreenObjects() {
 
 	float x = mPlayer.GetPosition().x;
@@ -194,6 +198,10 @@ void Game::HandleOffScreenObjects() {
 	}
 }
 
+void Game::HandleCollision() {
+	
+}
+
 
 void Game::Update(sf::Time deltaTime) {
 
@@ -220,3 +228,4 @@ void Game::Render() {
 	mWindow.display();
 
 }
+
