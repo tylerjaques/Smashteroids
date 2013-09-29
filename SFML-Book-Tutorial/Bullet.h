@@ -8,10 +8,10 @@ class Bullet : public Entity {
 
 private:
 	sf::RectangleShape mShape;
-	float mVelocity;
+	float mDistanceTraveled;
 	
 	//the only constructor is private -> users must use the create method
-	Bullet(float x, float y, float angle, float velocity);
+	Bullet(float x, float y, float angle);
 
 public:
 	static const float Distance;
@@ -23,7 +23,8 @@ public:
 	void SetPosition(float x, float y);
 	float GetRotation();
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-	static std::unique_ptr<Entity> Create(float x, float y, float angle, float velocity);
+	static std::unique_ptr<Entity> Create(float x, float y, float angle);
+	sf::FloatRect GetBoundingBox();
 };
 
 #endif

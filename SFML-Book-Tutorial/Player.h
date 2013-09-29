@@ -44,6 +44,7 @@ public:
 	sf::Vector2f GetPosition();
 	void SetPosition(float x, float y);
 	float GetRotation();
+	sf::FloatRect GetBoundingBox();
 };
 
 #endif

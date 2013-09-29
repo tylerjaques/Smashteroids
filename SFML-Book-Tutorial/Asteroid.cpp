@@ -67,4 +67,7 @@ float Asteroid::GetRotation() {
 	return MovementAngle;
 }
 
-
+sf::FloatRect Asteroid::GetBoundingBox() {
+	throw exception("Not Implemented!");
+	return sf::FloatRect(0, 0, 0, 0);
+}

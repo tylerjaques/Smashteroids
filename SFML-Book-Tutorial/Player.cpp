@@ -1,7 +1,7 @@
 #include "Player.h"
+#include "PI.h"
 
 const float Player::PlayerSpeed = 250.f;
-const float PI = std::atan(1.0f) * 4.0f;
 
 Player::Player() : mMaxSpeed(1000.0f), mHealth(100.0f), mAcceleration(20.0f),
 	FlyingAngle(270), IsMovingUp(false), IsRotatingLeft(false), IsRotatingRight(false) {
@@ -17,9 +17,9 @@ std::unique_ptr<Entity> Player::Shoot() {
 	GunSound.play();
 
 	sf::Vector2f pos = GetPosition();
-	float translationAngle = FlyingAngle;
+	float translationAngle = mConvex.getRotation();
 	
-	return std::unique_ptr<Entity>(Bullet::Create(pos.x, pos.y, translationAngle, 50));
+	return std::unique_ptr<Entity>(Bullet::Create(pos.x, pos.y, translationAngle));
 }
 
 void Player::Accelerate() {
@@ -111,4 +111,9 @@ void Player::SetPosition(float x, float y) {
 
 float Player::GetRotation() {
 	return mConvex.getRotation();
+}
+
+sf::FloatRect Player::GetBoundingBox() {
+	throw exception("Not Implemented!");
+	return sf::FloatRect(0, 0, 0, 0);
 }

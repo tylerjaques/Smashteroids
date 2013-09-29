@@ -98,6 +98,7 @@
     <ClInclude Include="ConfigMap.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="PI.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SoundManager.h" />
   </ItemGroup>
