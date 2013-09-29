@@ -58,10 +58,7 @@ void Game::Load() {
 
 	//give player default weapon
 	mPlayer.Create(&mSoundManager);
-	Game::SpawnAsteroids(5);
-
-	
-	
+	Game::SpawnAsteroids(1);
 }
 
 void Game::Run() {
@@ -111,6 +108,7 @@ void Game::UpdateStatistics(sf::Time elapsedTime) {
 			"Ship Angle = " + toString(mPlayer.GetRotation()) + "\n" +
 			"Ship Flying Angle = " + toString(mPlayer.FlyingAngle) + "\n" +
 			"Ship Position = " + toString(mPlayer.GetPosition().x) + "," + toString(mPlayer.GetPosition().y) + "\n" +
+			"Ship Health = " + toString(mPlayer.GetHealth()) + "\n" +
 			"Ship Speed = " + toString(mPlayer.Speed));
 
 		mStatisticsUpdateTime -= sf::seconds(1.0f);
@@ -201,10 +199,20 @@ void Game::HandleOffScreenObjects() {
 }
 
 void Game::HandleCollision() {
-	for(EntityIterator it = mEntities.begin(); it != mEntities.end(); ++it) {
-		if((*it)->GetBoundingBox().intersects(mPlayer.GetBoundingBox()))
+	for(EntityIterator itFirst = mEntities.begin(); itFirst != mEntities.end(); ++itFirst) {
+		if(mPlayer.GetBoundingBox().intersects((*itFirst)->GetBoundingBox()))
 		{
-			
+			if((*itFirst)->GetType() == EntityType::Asteroid) { 
+				mPlayer.DamagePlayer(20);
+				(*itFirst)->RemoveFromWorld = true;
+			}
+		}
+		if((*itFirst)->GetType() == EntityType::Bullet) { 
+			for(EntityIterator itSecond = mEntities.begin(); itSecond != mEntities.end(); ++itSecond) {
+				if((*itSecond)->GetType() == EntityType::Asteroid) { 
+					(*itSecond)->RemoveFromWorld = true;
+				}
+			}
 		}
 	}
 }
@@ -213,35 +221,41 @@ void Game::Update(sf::Time deltaTime) {
 
 	mPlayer.update(deltaTime);
 
+	//loop through entities to be updated
 	for(unsigned i = 0; i < mEntities.size(); ++i) {
 
 		mEntities[i]->update(deltaTime);
 
+		//if the item has requested disposal, mark it
 		if(mEntities[i]->RemoveFromWorld)
 			mItemsToDeleteIndexes.push_back(i);
 	}
-
+	
+	//dispose of marked items
 	if(mItemsToDeleteIndexes.size() > 0) {
-		for(unsigned i = 0; i < mItemsToDeleteIndexes.size(); ++i)
-			mEntities.erase(mEntities.begin() + mItemsToDeleteIndexes[i]);
+		for(int idx : mItemsToDeleteIndexes)
+			mEntities.erase(mEntities.begin() + idx);
 
+		//clear list of marks
 		mItemsToDeleteIndexes.clear();
 	}
+	
 
 	HandleOffScreenObjects();
-
+	HandleCollision();
 }
 
 void Game::Render() {
 
 	mWindow.clear();
 
+	
 	mWindow.draw(mPlayer);
 
 	mWindow.draw(mStatisticsText);
 
 	for(EntityIterator it = mEntities.begin(); it != mEntities.end(); ++it) {
-		(*it)->draw(mWindow, sf::RenderStates::Default);
+			(*it)->draw(mWindow, sf::RenderStates::Default);
 	}
 
 	mWindow.display();

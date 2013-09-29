@@ -113,6 +113,18 @@ float Player::GetRotation() {
 }
 
 sf::FloatRect Player::GetBoundingBox() {
-	throw exception("Not Implemented!");
-	return sf::FloatRect(0, 0, 0, 0);
+	
+	return mConvex.getGlobalBounds();
+}
+
+float Player::GetHealth() {
+	return mHealth;
+}
+
+void Player::DamagePlayer(float damageAmount)
+{
+	mHealth -= damageAmount;
+	if( mHealth <= 0 )
+		RemoveFromWorld = true;
+
 }
