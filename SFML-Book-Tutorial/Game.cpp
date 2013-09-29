@@ -199,7 +199,12 @@ void Game::HandleOffScreenObjects() {
 }
 
 void Game::HandleCollision() {
-	
+	for(EntityIterator it = mEntities.begin(); it != mEntities.end(); ++it) {
+		if((*it)->GetBoundingBox().intersects(mPlayer.GetBoundingBox()))
+		{
+			
+		}
+	}
 }
 
 
