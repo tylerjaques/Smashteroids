@@ -16,6 +16,8 @@ Game::Game() : mStatisticsNumFrames(0), mStatisticsUpdateTime(sf::Time::Zero) {
 		//get window settings from the config file
 		Settings.LoadFromFile("./Resources/Configs/Settings.config");
 
+		mMenu.SetOptions(&Settings);
+
 		//build the window using specified settings
 		float height = Settings.getAs<float>("height");
 		float width = Settings.getAs<float>("width");
@@ -126,8 +128,12 @@ void Game::ProcessEvents() {
 
 		case sf::Event::KeyPressed:
 			if(event.key.code == sf::Keyboard::Escape) {
-				mEntities.clear();
-				mWindow.close();
+
+				if(mMenu.Visible())
+					mMenu.Hide();
+				else
+					mMenu.Show();
+				//mWindow.close();
 			}
 			else
 				HandlePlayerInput(event.key.code, true);
@@ -154,7 +160,6 @@ void Game::HandlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
 	else if(key == sf::Keyboard::Right)
 		mPlayer.IsRotatingRight = isPressed;
 	else if(key == sf::Keyboard::Space) {
-		
 		mEntities.push_back(mPlayer.Shoot());
 	}
 }
@@ -249,15 +254,34 @@ void Game::Render() {
 
 	mWindow.clear();
 
-	
-	mWindow.draw(mPlayer);
+	sf::RectangleShape line1;
+	line1.setFillColor(sf::Color::White);
+	line1.setSize(sf::Vector2f(1000, 3));
+	line1.setRotation(36.799);
+	line1.setPosition(1.5f, 0);
 
-	mWindow.draw(mStatisticsText);
+	sf::RectangleShape line2;
+	line2.setFillColor(sf::Color::White);
+	line2.setSize(sf::Vector2f(1000, 3));
+	line2.setRotation(-36.799);
+	line2.setPosition(1.5f, mWindow.getSize().y - 1.5f);
 
-	for(EntityIterator it = mEntities.begin(); it != mEntities.end(); ++it) {
-			(*it)->draw(mWindow, sf::RenderStates::Default);
+	if(mMenu.Visible()) {
+		mMenu.draw(mWindow, sf::RenderStates::Default);
 	}
+	else {
+
+		mWindow.draw(mPlayer);
+
+		mWindow.draw(mStatisticsText);
+
+		for(EntityIterator it = mEntities.begin(); it != mEntities.end(); ++it) {
+				(*it)->draw(mWindow, sf::RenderStates::Default);
+		}
+	}
+
+	mWindow.draw(line1);
+	mWindow.draw(line2);
 
 	mWindow.display();
 }
-

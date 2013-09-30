@@ -4,7 +4,7 @@
 #include <memory>
 #include <SFML/Graphics.hpp>
 
-class Bullet : public Entity {
+class Bullet : Entity {
 
 private:
 	sf::RectangleShape mShape;

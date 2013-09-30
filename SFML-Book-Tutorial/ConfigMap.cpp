@@ -3,15 +3,15 @@
 #include <fstream>
 
 //Default Constructor
-Config::ConfigMap::ConfigMap() { }
+ConfigMap::ConfigMap() { }
 
 //Auto load constructor
-Config::ConfigMap::ConfigMap(string filepath) {
+ConfigMap::ConfigMap(string filepath) {
 	LoadFromFile(filepath);
 }
 
 //Manual Loader
-void Config::ConfigMap::LoadFromFile(string filepath) {
+void ConfigMap::LoadFromFile(string filepath) {
 
 	ifstream inFile(filepath);
 	string line = "";

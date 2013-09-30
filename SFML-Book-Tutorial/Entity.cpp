@@ -13,10 +13,7 @@ Entity::Entity(float velocity, float angle, EntityType t) {
 
 }
 
-Entity::~Entity() {
-	std::cout << __FUNCTION__ << std::endl;
-
-}
+Entity::~Entity() { }
 
 EntityType Entity::GetType() {
 	return mType;

@@ -9,7 +9,7 @@
 class SoundManager {
 
 private:
-	Config::ConfigMap mFileMap;
+	ConfigMap mFileMap;
 	std::map<std::string, sf::SoundBuffer> mSoundBuffMap;
 
 public:

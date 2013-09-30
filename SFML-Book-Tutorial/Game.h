@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Asteroid.h"
 #include "SoundManager.h"
+#include "Menu.h"
 #include <vector>
 #include <random>
 
@@ -29,8 +30,8 @@ private:
 	sf::Time mStatisticsUpdateTime;
 	std::size_t mStatisticsNumFrames;
 
-	Config::ConfigMap Settings;
-
+	ConfigMap Settings;
+	Menu mMenu;
 
 public:
 	Game();

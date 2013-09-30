@@ -7,26 +7,34 @@
 
 using namespace std;
 
-namespace Config {
+class ConfigMap : public map<string, string>  {
 
-	class ConfigMap : public map<string, string>  {
+public:
+	ConfigMap();
+	ConfigMap(string filepath);
+	void LoadFromFile(string filepath);
 
-	public:
-		ConfigMap();
-		ConfigMap(string filepath);
-		void LoadFromFile(string filepath);
-
-		template<typename T>
-		float getAs(std::string name) {
-			std::stringstream ss;
+	template<typename T>
+	float getAs(std::string name) {
+		std::stringstream ss;
 			
-			ss << at(name);
+		ss << at(name);
 
-			T ret;
-			ss >> ret;
-			return ret;
-		}
+		T ret;
+		ss >> ret;
+		return ret;
+	}
 
-	};
-}
+	template<typename T>
+	float getAs(std::string name) const {
+		std::stringstream ss;
+			
+		ss << at(name);
+
+		T ret;
+		ss >> ret;
+		return ret;
+	}
+
+};
 #endif

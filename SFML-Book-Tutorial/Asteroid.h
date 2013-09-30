@@ -7,7 +7,7 @@
 #include "ConfigMap.h"
 #include "Entity.h"
 
-class Asteroid : public Entity {
+class Asteroid : Entity {
 
 private:
 	sf::CircleShape mShape;
